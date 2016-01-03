@@ -1,0 +1,21 @@
+<header id="content-header">
+  <h1>Reviews for <%= link_to @movie.title, @movie %></h1>
+</header>
+
+<ol id="reviews">
+  <% @reviews.each do |review| %>
+    <li>
+      <span class="review"><%= pluralize(review.stars, "star") %></span> 
+      <span class="user">by <%= review.name %></span> 
+      <span class="date"><%= time_ago_in_words(review.created_at) %> ago.</span>
+      <p>
+        &quot;<%= review.comment %>&quot;
+      </p>
+      <span><%= link_to "Edit", edit_movie_review_path(@movie, review) %></span>
+      <span><%= link_to "Delete", movie_review_path(@movie, review), 
+                                  method: :delete, 
+                                  data: { confirm: "Are you sure?" } %></span>
+      
+    </li>
+  <% end %>
+</ol>
