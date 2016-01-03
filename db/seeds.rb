@@ -112,17 +112,20 @@ movie.reviews.create!([
   {
     name: "Roger Ebert", 
     stars: 3, 
-    comment: "I laughed, I cried, I spllied my popcorn!"
+    comment: "I laughed, I cried, I spllied my popcorn!",
+    location: "Dallas, TX"
   },
   {
     name: "Gene Siskel", 
     stars: 5, 
-    comment: "I'm a better reviewer than he is." 
+    comment: "I'm a better reviewer than he is.",
+    location: "Sydney, AU"
   },
   {
     name: "Peter Travers", 
     stars: 4, 
-    comment: "It's been years since a movie superhero was this fierce and this funny." 
+    comment: "It's been years since a movie superhero was this fierce and this funny.",
+    location: "Woodland, SG"
   }
 ])
 
@@ -130,5 +133,6 @@ movie = Movie.find_by(title: "Superman")
 movie.reviews.create!(
   name: "Elvis Mitchell", 
   stars: 5, 
-  comment: "It's a bird, it's a plane, it's a blockbuster!"
+  comment: "It's a bird, it's a plane, it's a blockbuster!",
+  location: "Kuala Lumpur, MY"
 )
