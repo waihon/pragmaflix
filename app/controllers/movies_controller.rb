@@ -46,6 +46,6 @@ private
 
   def movie_params
     params.require(:movie).permit(:title, :description, :rating, :released_on, 
-      :total_gross, :cast, :director, :duration, :image_file_name)
+      :total_gross, :cast, :director, :duration, :image)
   end
 end

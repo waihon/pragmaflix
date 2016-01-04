@@ -103,7 +103,22 @@ Movie.create!([
     director: 'Ishiro Honda',
     rating: 'PG-13',
     total_gross: 387_623_910
-  }
+  },
+  {
+    title: 'Iron Man 3',
+    description: 
+    %{
+      When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, 
+      he starts an odyssey of rebuilding and retribution.    
+    }.squish,
+    image_file_name: 'ironman-3.jpg',
+    cast: 'Robert Downey, Jr., Gwyneth Paltrow, Don Cheadle',
+    released_on: "2013-05-03",
+    duration: '129 min',
+    director: 'Shane Black',
+    rating: 'PG-13',
+    total_gross: 409_013_994
+  }  
 ])
 
 movie = Movie.find_by(title: "Iron Man")
