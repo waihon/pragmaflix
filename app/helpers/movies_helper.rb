@@ -15,7 +15,7 @@ module MoviesHelper
     #   image_tag(movie.image_file_name)
     # end
     if movie.image.exists?
-      image_tag(movie.image.url)
+      image_tag(movie.image.url(:small))
     else
       image_tag("placeholder.png")
     end
