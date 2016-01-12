@@ -23,7 +23,7 @@ describe "Viewing the list of movies" do
                           director: "Richard Donner",
                           duration: "143 min",
                           #image_file_name: "",
-                          image: "")
+                          image: nil)
 
     movie3 = Movie.create(title: "Spider-Man",
                           rating: "PG-13",
@@ -52,7 +52,7 @@ describe "Viewing the list of movies" do
     expect(page).to have_text(movie1.cast)
     expect(page).to have_text(movie1.duration)  
     #expect(page).to have_selector("img[src$='#{movie1.image_file_name}']")
-    expect(page).to have_selector("img[src$='#{movie1.image.url}']")
+    expect(page).to have_selector("img[src$='#{movie1.image.url(:small)}']")
   end
 
   it "show movies that have already been released" do

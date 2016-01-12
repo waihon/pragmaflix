@@ -3,8 +3,6 @@
 describe "Viewing an individual movie" do
   it "show the movie's details" do
     # Arrange
-    #movie = Movie.create(movie_attributes(total_gross: 300000000.00))    
-    #movie = Movie.create(movie_attributes(image_file_name: "", total_gross: 300_000_000.00))
     movie = Movie.create(movie_attributes(image: open("#{Rails.root}/app/assets/images/movie.jpg"), 
         total_gross: 300_000_000.00))
 
@@ -21,7 +19,7 @@ describe "Viewing an individual movie" do
     expect(page).to have_text(movie.director)
     expect(page).to have_text(movie.duration)
     #expect(page).to have_selector("img[src$='#{movie.image_file_name}']")
-    expect(page).to have_selector("img[src$='#{movie.image.url}']")
+    expect(page).to have_selector("img[src$='#{movie.image.url(:small)}']")
   end
 
   it "shows a placeholder image when the movie image is not available" do

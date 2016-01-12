@@ -34,36 +34,32 @@
   </p>
 
   <% if @movie.recent_reviews.any? %>
-    <h3>Recent Reviews</h3>
-    <ol id="reviews">
-      <% @movie.recent_reviews.each do |review| %>
-        <li>
-          <span class="review"><%= pluralize(review.stars, "star") %></span> 
-          <span class="user">by <%= review.name %></span> 
-          <span class="date"><%= time_ago_in_words(review.created_at) %> ago.</span>
-          <p>
-            &quot;<%= review.comment %>&quot;
-          </p>
-        </li>
-      <% end %>
-    </ol>
     <p>
-      Read all <%= link_to pluralize(@movie.reviews.count, "review"), 
-                      movie_reviews_path(@movie) %>
+      <%= link_to "Recent Reviews", "#", id: "reviews-link" %>
     </p>
+    <section id="reviews-section">
+      <ol id="reviews">
+        <%= render @reviews %>
+      </ol>
+      <p id="reviews-count">
+        Read all <%= link_to pluralize(@movie.reviews.count, "review"), 
+                        movie_reviews_path(@movie) %>
+      </p>      
+      <% @review = @movie.reviews.new %>
+      <%= render "reviews/form", remote: true %>
+    </section>
   <% end %>  
   
   <footer>
-    <p>
-      <%= link_to "Write Review", new_movie_review_path(@movie),
-                  class: "button ok review" %>
-    </p>
-    <%#= link_to pluralize(@movie.reviews.count, "review"), movie_reviews_path(@movie) %>
     <nav>
       <%= link_to 'Edit', edit_movie_path(@movie), class: 'button' %>
       <%= link_to 'Delete', @movie, 
                   class: 'button',
                   method: :delete, data: { confirm: 'Are you sure?' } %>
+      <p>
+        <%= link_to "Write Review", new_movie_review_path(@movie),
+                    class: "button ok review" %>
+      </p>                  
     </nav>
   </footer>
 </article>

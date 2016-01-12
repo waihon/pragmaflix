@@ -1,5 +1,7 @@
-<%= form_for([@movie, @review]) do |f| %>
-  <%= render "shared/errors", object: @review %>
+<%= form_for([@movie, @review], remote: remote) do |f| %>
+  <div id="errors-div">
+    <%= render "shared/errors", object: @review %>
+  </div>
   <fieldset>
     <ol>
       <li class="required">
@@ -28,5 +30,7 @@
   </fieldset>
   <%#= f.submit "Post Review" %>
   <%= f.submit %>
-  <%= link_to "Cancel", @movie, class: "button" %>
+  <% if !remote %>
+    <%= link_to "Cancel", @movie, class: "button" %>
+  <% end %>
 <% end %>

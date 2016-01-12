@@ -15,10 +15,14 @@ class ReviewsController < ApplicationController
 
   def create
     @review = @movie.reviews.new(review_params)
-    if @review.save
-      redirect_to movie_reviews_path(@movie), notice: "Thanks for your review!"
-    else
-      render :new
+    respond_to do |format|
+      if @review.save
+        format.html { redirect_to movie_reviews_path(@movie), notice: "Thanks for your review!" }
+        format.js # render views/reviews/create.js.erb by default
+      else
+        format.html { render :new }
+        format.js { render 'errors.js.erb' }
+      end
     end
   end
 

@@ -5,8 +5,7 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
-    # For embedded Review form within the movie details page
-    @review = @movie.reviews.new
+    @reviews = @movie.recent_reviews
   end
   
   def edit

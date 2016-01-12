@@ -1,0 +1,15 @@
+/* prepend: at the beginning; append: at the end */
+$("#reviews").prepend("<%= j render @review %>");
+/* html vs text */
+$('#reviews-count').html("Read all <%= j link_to pluralize(@movie.reviews.count, 'review'), movie_reviews_path(@movie) %>");
+/* Clear any previous error */
+$("#errors-div").html("");
+/* Initialize form fields */
+$("#review_name").val("");
+$("#review_location").val("");
+$("#review_comment").val("");
+$("#review_stars_1").prop("checked", false);
+$("#review_stars_2").prop("checked", false);
+$("#review_stars_3").prop("checked", false);
+$("#review_stars_4").prop("checked", false);
+$("#review_stars_5").prop("checked", false);
