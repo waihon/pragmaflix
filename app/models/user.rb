@@ -1,13 +1,26 @@
 class User < ActiveRecord::Base
-  has_secure_password validations: true
-
   validates :name, presence: true
+
+  validates :username, presence: true,
+                       format: { with: /\A[A-Z0-9]+\z/i, allow_blank: true },
+                       uniqueness: { case_sensitive: false } 
+
   validates :email, presence: true,
                     #format: { with: /\A\S+@\S+\z/ },
-                    email: true,
+                    #format: { with: EmailValidator.regexp(strict_mode: true), allow_blank: true },
+                    #email: true,
+                    email: { strict_mode: true, allow_blank: true },
                     uniqueness: { case_sensitive: false }
+
+  has_secure_password validations: true                       
+
   # A password isn't required when a user updates his name and/or email.
   # So if the password field is left blank when editing the user account, 
   # the length validation is skipped.
   validates :password, length: { minimum: 10, allow_blank: true }
+
+  def gravatar_id
+    Digest::MD5::hexdigest(email.downcase)
+  end
+
 end

@@ -106,4 +106,60 @@ describe "A user" do
     expect(user1.errors[:password].any?).to eq(true)
     expect(user2.errors[:password].any?).to eq(false)
   end
+
+  it "requires a username" do
+    # Arrange
+    user = User.new(username: "")
+
+    # Action
+    user.valid?
+
+    # Assert
+    expect(user.errors[:username].any?).to eq(true)
+  end
+
+  it "accepts a username that only consists of letters and numbers without spaces" do
+    # Arrange
+    user = User.new(username: "larryk48")
+
+    # Action
+    user.valid?
+
+    # Assert
+    expect(user.errors[:username].any?).to eq(false)
+  end
+
+  it "rejects a username that contains spaces" do
+    # Arrange
+    user = User.new(username: "larryk 48")
+
+    # Action
+    user.valid?
+
+    # Assert
+    expect(user.errors[:username].any?).to eq(true)
+  end
+
+  it "rejects a username that non alphanumeric characters" do
+    # Arrange
+    user = User.new(username: "larryk.48")
+
+    # Action
+    user.valid?
+
+    # Assert
+    expect(user.errors[:username].any?).to eq(true)
+  end
+
+  it "requires a unique, case insensitive username" do
+    # Arrange
+    user1 = User.create!(user_attributes)
+    user2 = User.new(username: user1.username.upcase) # case insensitive
+
+    # Action
+    user2.valid?
+
+    # Assert
+    expect(user2.errors[:username].first).to eq("has already been taken")    
+  end
 end
