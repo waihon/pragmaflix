@@ -24,10 +24,11 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email_or_username, password)
-    user = User.find_by(email: email_or_username)
-    #user = User.find_by(username: email_or_username) if user.nil?
-    # Case insensitive
-    user = User.where("lower(username) = ?", email_or_username.downcase).first if user.nil?
+    # find_by is case sensitive
+    #user = User.find_by(email: email_or_username) || User.find_by(username: email_or_username)
+    # Make the search case insensitive
+    user = User.where("lower(email) = ?", email_or_username.downcase).first || 
+           User.where("lower(username) = ?", email_or_username.downcase).first
     user && user.authenticate(password)
   end
 end

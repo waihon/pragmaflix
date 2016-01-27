@@ -185,7 +185,7 @@ describe "authenticate" do
     expect(User.authenticate(@user.email, "no match")).to eq(false)
   end
 
-  it "does not authenticate a user iwth invalid username/password combination" do
+  it "does not authenticate a user with invalid username/password combination" do
     # Assert
     expect(User.authenticate(@user.username, "no match")).to eq(false)
   end
@@ -208,5 +208,17 @@ describe "authenticate" do
 
   it "returns the user if the email and password match" do
     expect(User.authenticate(@user.email, @user.password)).to eq(@user)
+  end
+
+  it "returns the user if the case insensitive email and password match" do
+    expect(User.authenticate(@user.email.upcase, @user.password)).to eq(@user)
+  end
+
+  it "returns the user if the username and password match" do
+    expect(User.authenticate(@user.username, @user.password)).to eq(@user)
+  end
+
+  it "returns the user if the case insensitive username and password match" do
+    expect(User.authenticate(@user.username.upcase, @user.password)).to eq(@user)
   end
 end
