@@ -163,3 +163,50 @@ describe "A user" do
     expect(user2.errors[:username].first).to eq("has already been taken")    
   end
 end
+
+describe "authenticate" do
+  before do
+    # Arrange
+    @user = User.create!(user_attributes)
+  end
+
+  it "authenticates a user with valid email/password combination" do
+    # Assert
+    expect(User.authenticate(@user.email, @user.password)).to eq(@user)
+  end
+
+  it "authenticates a user with valid username/password combination" do
+    # Assert
+    expect(User.authenticate(@user.username, @user.password)).to eq(@user)
+  end
+
+  it "does not authenticate a user with invalid email/password combination" do
+    # Assert
+    expect(User.authenticate(@user.email, "no match")).to eq(false)
+  end
+
+  it "does not authenticate a user iwth invalid username/password combination" do
+    # Assert
+    expect(User.authenticate(@user.username, "no match")).to eq(false)
+  end
+
+  it "returns non-true value if the email does not match" do
+    expect(User.authenticate("nomatch@example.com", @user.password)).not_to eq(true)
+  end
+
+  it "returns non-true value if the username does not match" do
+    expect(User.authenticate("nomatch", @user.password)).not_to eq(true)
+  end
+
+  it "returns non-true value if the password does not match that of a valid email" do
+    expect(User.authenticate(@user.email, "nomatch")).not_to eq(true)
+  end
+
+  it "returns non-true value if the password does not match that of a valid username" do
+    expect(User.authenticate(@user.username, "nomatch")).not_to eq(true)
+  end
+
+  it "returns the user if the email and password match" do
+    expect(User.authenticate(@user.email, @user.password)).to eq(@user)
+  end
+end
