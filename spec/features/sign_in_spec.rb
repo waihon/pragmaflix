@@ -26,6 +26,10 @@ describe "Signing in a user" do
     # Assert
     expect(current_path).to eq(user_path(user))
     expect(page).to have_text("Welcome back, #{user.name}!")
+
+    expect(page).to have_link(user.name)
+    expect(page).not_to have_link("Sign Up", signup_path)
+    expect(page).not_to have_link("Sign In", signin_path)
   end
 
   it "does not sign in the user if the email/password combination is invalid" do
@@ -44,5 +48,9 @@ describe "Signing in a user" do
     # It won't remain at signin path even when there's any error.
     expect(current_path).to eq(session_path)
     expect(page).to have_text("Invalid email/username/password combination!")    
+
+    expect(page).not_to have_link(user.name)
+    expect(page).to have_link("Sign Up", signup_path)
+    expect(page).to have_link("Sign In", signin_path)    
   end
 end
