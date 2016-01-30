@@ -4,6 +4,8 @@ describe "Viewing a user's profile page" do
     user = User.create!(user_attributes)
 
     # Action
+    sign_in(user)
+    
     visit user_url(user)
 
     # Assert

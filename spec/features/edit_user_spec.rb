@@ -4,7 +4,8 @@ describe "Editing a user" do
     user = User.create!(user_attributes)
 
     # Action
-    visit user_url(user)
+    #visit user_url(user)
+    sign_in(user)
     click_link "Edit Account"
 
     # Assert
@@ -26,7 +27,9 @@ describe "Editing a user" do
     user = User.create!(user_attributes)
 
     # Action
-    visit edit_user_url(user)
+    #visit edit_user_url(user)
+    sign_in(user)
+    click_link "Edit Account"
     fill_in "Name", with: " "
     click_button "Update Account"
 
