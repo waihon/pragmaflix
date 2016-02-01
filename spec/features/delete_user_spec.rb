@@ -1,11 +1,16 @@
 describe "Deleting a user" do
+  before do
+    admin = User.create!(user_attributes(admin: true))
+    sign_in(admin)
+  end
+
   it "destroys the user and redirects to the home page" do
     # Arrange
     user = User.create!(user_attributes)
 
     # Action
     #visit user_path(user)
-    sign_in(user)
+    #sign_in(user)
     click_link "Delete Account"
 
     # Assert
@@ -23,8 +28,8 @@ describe "Deleting a user" do
     user = User.create!(user_attributes)
 
     # Action
-    visit root_path
-    sign_in(user)
+    #visit root_path
+    #sign_in(user)
 
     visit user_path(user)
     click_link "Delete Account"
