@@ -1,4 +1,9 @@
 describe "Creating a new review" do
+  before do
+    @user = User.create!(user_attributes)
+    sign_in(@user)
+  end
+
   it "saves the review" do
     # Arrange
     movie = Movie.create(movie_attributes)
@@ -11,7 +16,10 @@ describe "Creating a new review" do
     expect(current_path).to eq(new_movie_review_path(movie))
 
     # Action
-    fill_in "Name", with: "Roger Ebert"
+
+    # Name is part of the signed in user
+    #fill_in "Name", with: "Roger Ebert"
+    # Change Review Stars from a dropdown to radio buttons
     #select 3, from: "review_stars"
     choose "review_stars_3"
     fill_in "Comment", with: "I laughed, I cried, I spilled my popcorn!"
@@ -20,6 +28,7 @@ describe "Creating a new review" do
 
     expect(current_path).to eq(movie_reviews_path(movie))
     expect(page).to have_text("Thanks for your review!")
+    expect(page).to have_text(@user.name)
   end
 
   it "does not save the review if it's invalid" do

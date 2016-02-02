@@ -162,6 +162,43 @@ describe "A user" do
     # Assert
     expect(user2.errors[:username].first).to eq("has already been taken")    
   end
+
+  # Own example
+  it "has many reviews" do
+    # Arrange
+    user = User.create!(user_attributes)
+    movie1 = Movie.create!(movie_attributes)
+    movie2 = Movie.create!(movie_attributes)
+    movie3 = Movie.create!(movie_attributes)
+    review1 = Review.create!(review_attributes(user_id: user.id, movie_id: movie1.id))
+    review2 = Review.create!(review_attributes(user_id: user.id, movie_id: movie2.id))
+    review3 = Review.create!(review_attributes(user_id: user.id, movie_id: movie3.id))
+
+    # Action - N/A
+
+    # Assert
+    expect(user.reviews).to include(review1)
+    expect(user.reviews).to include(review2)
+    expect(user.reviews).to include(review3)
+  end
+
+  # The instructor's example
+  it "has reviews" do
+    user = User.new(user_attributes)
+    movie1 = Movie.new(movie_attributes(title: "Iron Man"))
+    movie2 = Movie.new(movie_attributes(title: "Superman"))
+
+    review1 = movie1.reviews.new(location: "Texas", stars: 5, comment: "Two thumbs up!")
+    review1.user = user
+    review1.save!
+
+    review2 = movie2.reviews.new(location: "New York", stars: 3, comment: "Cool!")
+    review2.user = user
+    review2.save!
+
+    expect(user.reviews).to include(review1)
+    expect(user.reviews).to include(review2)
+  end
 end
 
 describe "authenticate" do

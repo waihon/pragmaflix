@@ -39,7 +39,10 @@ describe "A movie" do
     # Movie that has more than 51 reviews and with average stars of 4 or better
     # but with total gross of less than $50M
     movie1 = Movie.create(movie_attributes(total_gross: 49_999_999.99))
-    review = movie1.reviews.create(review_attributes(stars: 4, name: "Mary Jane"))
+    # The reviewer name has been refactored as user_id in reviews table
+    #review = movie1.reviews.create(review_attributes(stars: 4, name: "Mary Jane"))
+    user = User.create!(user_attributes(name: "Mary Jane"))
+    review = movie1.reviews.create(review_attributes(stars: 4, user: user))
     50.times do
       movie1.reviews.create(review_attributes(stars: 4))
     end

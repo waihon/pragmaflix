@@ -13,13 +13,14 @@ describe "A review" do
     expect(review.valid?).to eq(true)
   end
 
-  it "requires a name" do
-    review = Review.new(name: "")
+  # The name is part of the signed in user
+  # it "requires a name" do
+  #   review = Review.new(name: "")
 
-    review.valid? # populate errors
+  #   review.valid? # populate errors
 
-    expect(review.errors[:name].any?).to eq(true)
-  end
+  #   expect(review.errors[:name].any?).to eq(true)
+  # end
 
   it "requires a comment" do
     review = Review.new(comment: "")

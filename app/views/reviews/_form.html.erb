@@ -5,15 +5,12 @@
   <fieldset>
     <ol>
       <li class="required">
-        <%= f.label :name %>
-        <%= f.text_field :name, size: 40, autofocus: true %>
-      </li>
-      <li class="required">
         <%= f.label :location %>
         <%= f.text_field :location, size: 30 %>
       </li>
       <li class="required stars">
         <%= f.label :stars %>
+        <!-- Change Review Stars from a dropdown to radio buttons -->
         <%#= f.select :stars, Review::STARS, prompt: "Pick one" %>
         <% Review::STARS.each do |star| %>
           <span class="star">
@@ -25,7 +22,7 @@
         <%= f.label :comment %>
         <%= f.text_area :comment, cols: 48, rows: 7, 
           placeholder: "What did you think?" %>
-      </li>
+      </li> 
     </ol>
   </fieldset>
   <%#= f.submit "Post Review" %>

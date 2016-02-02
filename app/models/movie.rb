@@ -1,4 +1,6 @@
 class Movie < ActiveRecord::Base
+  has_many :reviews, dependent: :destroy
+    
   has_attached_file :image, styles: {
     small: "90x133>",
     thumb: "50x50>"
@@ -18,8 +20,6 @@ class Movie < ActiveRecord::Base
 
   RATINGS = %w[G PG PG-13 R NC-17]
   validates :rating, inclusion: { in: RATINGS }
-
-  has_many :reviews, dependent: :destroy
 
   def self.released
     where("released_on <= ?", Time.now).order("released_on desc")

@@ -1,5 +1,8 @@
 class Review < ActiveRecord::Base
-  validates :name, presence: true
+  belongs_to :movie
+  belongs_to :user
+
+  #validates :name, presence: true
   validates :location, presence: true
 
   STARS = [1, 2, 3, 4, 5]
@@ -9,7 +12,4 @@ class Review < ActiveRecord::Base
   }
 
   validates :comment, length: { minimum: 4 }
-
-
-  belongs_to :movie
 end

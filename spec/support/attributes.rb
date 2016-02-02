@@ -15,7 +15,8 @@ end
 
 def review_attributes(overrides = {})
   {
-    name: "Roger Ebert",
+    # The name is part of the signed in user
+    #name: "Roger Ebert",
     stars: 3,
     comment: "I laughed, I cried, I spilled my popcorn!",
     location: "Dallas, TX"
