@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
     if current_user
       @current_favorite = current_user.favorites.find_by(movie_id: @movie.id)
     end
+    @genres = @movie.genres
   end
   
   def edit
@@ -51,7 +52,9 @@ class MoviesController < ApplicationController
 private
 
   def movie_params
+  # Please note that genre_ids is not a symbol and it has to be initialized
+  # with an empty array. 
     params.require(:movie).permit(:title, :description, :rating, :released_on, 
-      :total_gross, :cast, :director, :duration, :image)
+      :total_gross, :cast, :director, :duration, :image, genre_ids: [])
   end
 end

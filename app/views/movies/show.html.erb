@@ -49,6 +49,15 @@
     <%= format_total_gross(@movie) %>
   </p>
 
+  <% if @genres.any? %>
+    <h3>Genres</h3>
+    <ul>
+      <% @genres.each do |genre| %>
+        <li><%= genre.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <h3>Average Review</h3>
   <p>
     <%= format_average_stars(@movie) %>

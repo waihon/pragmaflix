@@ -2,6 +2,9 @@ describe "Creating a new movie" do
   before do
     admin = User.create(user_attributes(admin: true))
     sign_in(admin)
+    @genre1 = Genre.create!(name: "Action")
+    @genre2 = Genre.create!(name: "Comedy")
+    @genre3 = Genre.create!(name: "Thriller")
   end
 
   it "saves the movie and shows the new movie's details" do
@@ -33,6 +36,9 @@ describe "Creating a new movie" do
     #fill_in "Image file name", with: "movie.png"
     attach_file "Image", "#{Rails.root}/app/assets/images/movie.jpg"
 
+    check @genre1.name
+    check @genre2.name
+
     click_button "Create Movie"
 
     # Assert
@@ -43,7 +49,10 @@ describe "Creating a new movie" do
     expect(page).to have_text("PG-13")
     expect(page).to have_text((Time.now.year - 1).to_s)
     expect(page).to have_text("$123,456,789.00")
-
+    expect(page).to have_text(@genre1.name)
+    expect(page).to have_text(@genre2.name)
+    expect(page).not_to have_text(@genre3.name)
+    
     expect(page).to have_text("Movie was successfully created!")
   end
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :genres
+
   resource :session  # single resource
 
   get "signin" => "sessions#new"

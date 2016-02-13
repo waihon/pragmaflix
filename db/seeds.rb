@@ -8,6 +8,39 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+Genre.create!([
+  {
+    name: "Action"
+  },
+  {
+    name: "Comedy"
+  },
+  {
+    name: "Drama"
+  },
+  {
+    name: "Romance"
+  },
+  {
+    name: "Thriller"
+  },
+  {
+    name: "Fantasy"
+  },
+  {
+    name: "Documentary"
+  },
+  {
+    name: "Adventure"
+  },
+  {
+    name: "Animation"
+  },
+  {
+    name: "Sci-Fi"
+  },
+])
+
 Movie.create!([
   {
     title: 'Iron Man',
