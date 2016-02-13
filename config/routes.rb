@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resource :session  # single resource
+
   get "signin" => "sessions#new"
 
   get "signup" => "users#new"
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   # patch "movies/:id"    => "movies#update"
   resources :movies do
     resources :reviews
+    resources :favorites
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

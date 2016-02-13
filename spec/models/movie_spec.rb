@@ -273,4 +273,40 @@ describe "A movie" do
 
     expect(movie.average_stars).to eq(3)
   end
+
+  # Own example
+  it "has many fans" do
+    # Arrange
+    movie1 = Movie.create!(movie_attributes(title: "Iron Man"))
+    fan1 = User.create!(user_attributes(username: "Joe", email: "joe@example.com"))
+    fan2 = User.create!(user_attributes(username: "Jane", email: "jane@example.com"))
+    movie2 = Movie.create!(movie_attributes(title: "Star Wars"))
+    fan3 = User.create!(user_attributes(username: "Ken", email: "ken@example.com"))
+    movie1.favorites.create!(user: fan1)
+    movie1.favorites.create!(user: fan2)
+    movie2.favorites.create!(user: fan3)
+
+    # Action - N/A
+
+    # Assert
+    expect(movie1.fans).to include(fan1)
+    expect(movie1.fans).to include(fan2)
+    expect(movie1.fans).not_to include(fan3)
+    expect(movie2.fans).not_to include(fan1)
+    expect(movie2.fans).not_to include(fan2)
+    expect(movie2.fans).to include(fan3)
+  end
+
+  # The instructor's example
+  it "has fans" do
+    movie = Movie.new(movie_attributes)
+    fan1 = User.new(user_attributes(username: "larry", email: "larry@example.com"))
+    fan2 = User.new(user_attributes(username: "moe", email: "moe@example.com"))
+
+    movie.favorites.new(user: fan1)
+    movie.favorites.new(user: fan2)
+
+    expect(movie.fans).to include(fan1)
+    expect(movie.fans).to include(fan2)
+  end
 end

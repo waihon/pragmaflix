@@ -258,4 +258,15 @@ describe "authenticate" do
   it "returns the user if the case insensitive username and password match" do
     expect(User.authenticate(@user.username.upcase, @user.password)).to eq(@user)
   end
+
+  it "has favorite movies" do
+    user = User.new(user_attributes(username: "larry", email: "larry@example.com"))
+    movie1 = Movie.new(movie_attributes(title: "Iron Man"))
+    movie2 = Movie.new(movie_attributes(title: "Spider-Man"))
+    user.favorites.new(movie: movie1)
+    user.favorites.new(movie: movie2)
+
+    expect(user.favorite_movies).to include(movie1)
+    expect(user.favorite_movies).to include(movie2)
+  end
 end

@@ -121,32 +121,72 @@ Movie.create!([
   }  
 ])
 
-movie = Movie.find_by(title: "Iron Man")
+User.create!([
+  {
+    name: "Roger Ebert",
+    email: "roger@example.com",
+    password: "secretgarden",
+    password_confirmation: "secretgarden",
+    username: "roger"
+  },
+  {
+    name: "Gene Siskel",
+    email: "gene@example.com",
+    password: "secretgarden",
+    password_confirmation: "secretgarden",
+    username: "gene"
+  },
+  {
+    name: "Peter Travers",
+    email: "peter@example.com",
+    password: "secretgarden",
+    password_confirmation: "secretgarden",
+    username: "peter"    
+  },
+  {
+    name: "Elvis Mitchell",
+    email: "elvis@example.com",
+    password: "secretgarden",
+    password_confirmation: "secretgarden",
+    username: "elvis"    
+  },
 
+])
+
+roger = User.find_by(name: "Roger Ebert")
+gene = User.find_by(name: "Gene Siskel")
+peter = User.find_by(name: "Peter Travers")
+elvis = User.find_by(name: "Elvis Mitchell")
+
+movie = Movie.find_by(title: "Iron Man")
 movie.reviews.create!([
   {
-    name: "Roger Ebert", 
+    user: roger, 
     stars: 3, 
     comment: "I laughed, I cried, I spllied my popcorn!",
     location: "Dallas, TX"
   },
   {
-    name: "Gene Siskel", 
+    user: gene, 
     stars: 5, 
     comment: "I'm a better reviewer than he is.",
     location: "Sydney, AU"
   },
   {
-    name: "Peter Travers", 
+    user: peter, 
     stars: 4, 
     comment: "It's been years since a movie superhero was this fierce and this funny.",
     location: "Woodland, SG"
   }
 ])
 
+movie.fans << roger
+movie.fans << gene
+movie.fans << elvis
+
 movie = Movie.find_by(title: "Superman")
 movie.reviews.create!(
-  name: "Elvis Mitchell", 
+  user: elvis, 
   stars: 5, 
   comment: "It's a bird, it's a plane, it's a blockbuster!",
   location: "Kuala Lumpur, MY"

@@ -56,3 +56,33 @@
      }
    }
  }
+
+ /* USERS */
+
+ol#users {
+  font-size: 1.15em;
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin: 1em 0;
+
+    span {
+      &.review {
+        font-weight: bold;
+      }
+      &.user {
+        font-weight: bold;
+      }
+      &.date {
+        font-size: .9em;
+        font-weight: bold;
+        color: $secondary-text-color;
+      }
+    }
+
+    p {
+      font-size: .95em;
+    }
+  }
+}
