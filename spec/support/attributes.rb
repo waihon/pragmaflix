@@ -32,3 +32,9 @@ def user_attributes(overrides = {})
     password_confirmation: "secretgarden"
   }.merge(overrides)
 end
+
+def genre_attributes(overrides = {})
+  {
+    name: "Action"
+  }.merge(overrides)
+end

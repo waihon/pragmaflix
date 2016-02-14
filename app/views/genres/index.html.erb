@@ -1,0 +1,11 @@
+<header id="content-header">
+  <h1><%= pluralize(@genres.count, "Genre") %></h1>
+</header>
+
+<ul id="genres">
+  <% @genres.all.each do |genre| %>
+    <li>
+      <%= link_to "#{genre.name} (#{genre.movies.count})", genre %>
+    </li>
+  <% end %>
+</ul>

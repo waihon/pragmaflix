@@ -9,6 +9,14 @@
           <%= link_to 'Add New Movie', new_movie_path, class: 'button' %>
         </li>
       <% end %>
+      <li class="all-genres">
+        <%= link_to "All Genres", genres_path, class: "button" %>
+      </li>
+      <% if current_user_admin? %>
+        <li class="create-genre">
+          <%= link_to "Add New Genre", new_genre_path, class: "button" %>
+        </li>
+      <% end %>
     </ul>
   </nav>
 </aside>

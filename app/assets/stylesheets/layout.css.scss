@@ -140,6 +140,19 @@ aside#sidebar {
           padding-left: 35px;
         }
 
+        &.all-genres a {
+          display: block;
+          background: image-url("arrow.png") no-repeat 10px 8px;
+          padding-left: 35px;
+        }
+
+        &.create-genre a {
+          display: block;
+          background: image-url("add.png") no-repeat 10px 8px;
+          padding-left: 35px;
+        }
+
+
         a:hover {
           background-color: $accent-color;
           color: #000;
