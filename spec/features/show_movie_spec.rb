@@ -56,4 +56,37 @@ describe "Viewing an individual movie" do
     # Assert
     expect(page).to have_text("Flop!")  
   end
+
+  it "shows the movie's fans and genres in the side bar" do
+    # Arrange
+    movie = Movie.create!(movie_attributes)
+    fan1 = User.create!(user_attributes(name: "Joe", username: "joe", email: "joe@example.com"))
+    fan2 = User.create!(user_attributes(name: "Mary", username: "mary", email: "mary@example.com"))
+    genre1 = Genre.create!(genre_attributes(name: "Action"))
+    genre2 = Genre.create!(genre_attributes(name: "Comedy"))
+    movie.fans << fan1
+    movie.genres << genre1
+
+    # Action
+    visit movie_url(movie)
+
+    # Assert
+    within("aside#sidebar") do
+      expect(page).to have_text(fan1.name)
+      expect(page).not_to have_text(fan2.name)
+      expect(page).to have_text(genre1.name)
+      expect(page).not_to have_text(genre2.name)
+    end
+  end
+
+  it "shows the movie's title in the page title" do
+    # Arrange
+    movie = Movie.create!(movie_attributes(title: "Iron Man"))
+
+    # Action
+    visit movie_url(movie)
+
+    # Assert
+    expect(page).to have_title("Flix - #{movie.title}")
+  end
 end

@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.released
+    @genres = Genre.all
   end
 
   def show
@@ -18,6 +19,8 @@ class MoviesController < ApplicationController
   
   def edit
     @movie = Movie.find(params[:id])
+    @fans = @movie.fans
+    @genres = @movie.genres
   end
   
   def update
@@ -31,6 +34,8 @@ class MoviesController < ApplicationController
 
   def new
     @movie = Movie.new
+    @fans = []
+    @genres = []
   end
   
   def create

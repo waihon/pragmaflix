@@ -34,3 +34,13 @@
     </li>
   <% end %>
 </ul>
+
+<% content_for :side do %>
+  <ul id="genres">
+    <% @genres.all.each do |genre| %>
+      <li>
+        <%= link_to "#{genre.name} (#{genre.movies.count})", genre %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
