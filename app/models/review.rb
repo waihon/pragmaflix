@@ -12,4 +12,6 @@ class Review < ActiveRecord::Base
   }
 
   validates :comment, length: { minimum: 4 }
+
+  scope :past_n_days, ->(n) { where("created_at >= ?", n.days.ago) }
 end

@@ -23,6 +23,12 @@ class User < ActiveRecord::Base
   # the length validation is skipped.
   validates :password, length: { minimum: 10, allow_blank: true }
 
+  #scope :by_name, -> { order(name: :asc) }
+  # OR
+  scope :by_name, -> { order(:name) }
+
+  scope :not_admins, -> { where(admin: false).by_name }
+
   def gravatar_id
     Digest::MD5::hexdigest(email.downcase)
   end

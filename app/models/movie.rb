@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-  has_many :reviews, dependent: :destroy
+  has_many :reviews, -> { order(created_at: :desc)}, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :fans, through: :favorites, source: :user
   has_many :critics, through: :reviews, source: :user
@@ -26,24 +26,47 @@ class Movie < ActiveRecord::Base
   RATINGS = %w[G PG PG-13 R NC-17]
   validates :rating, inclusion: { in: RATINGS }
 
-  def self.released
-    where("released_on <= ?", Time.now).order("released_on desc")
-  end
+  scope :released, -> { where("released_on <= ?", Time.now).order(released_on: :desc) }
+  # def self.released
+  #   where("released_on <= ?", Time.now).order("released_on desc")
+  # end
   
-  def self.hits
-    where('total_gross >= 300000000').order('total_gross desc')
-  end
+  scope :hits, -> { released.where('total_gross >= 300000000').order(total_gross: :desc) }
+  # def self.hits
+  #   where('total_gross >= 300000000').order('total_gross desc')
+  # end
+
+  scope :flops, -> { released.where('total_gross < 50000000').order(total_gross: :asc) }  
+  # def self.flops
+  #   where('total_gross < 10_000_000').order('total_gross asc')
+  # end
+
+  scope :upcoming, -> { where("released_on > ?", Time.now).order(released_on: :asc) }
+
+  scope :rated, ->(rating) { released.where(rating: rating) }
+
+  scope :recent, ->(max = 5) { released.limit(max) }
   
-  def self.flops
-    where('total_gross < 10000000').order('total_gross asc')
-  end
-  
-  def self.recently_added
-    order('created_at desc').limit(3)
+  scope :recently_added, ->(max = 3) { order(created_at: :desc).limit(max) }
+  # def self.recently_added
+  #   order('created_at desc').limit(3)
+  # end
+
+  scope :grossed_less_than, ->(amount) { released.where("total_gross < ?", amount) }
+
+  scope :grossed_greater_than, ->(amount) { released.where("total_gross > ?", amount) }
+
+  def self.cult_classics
+    # Aggregation methods such as average when being applied to an empty collection will return a nil 
+    # and that could not be compared to a numeric value.
+    # An example of resulting error is "NoMethodError: undefined method `>=' for nil:NilClass".
+    # The solution is to prefix that comparison with a checking on the size of the collection.     
+    select { |movie| movie.reviews.count > 50 && movie.revews.average(:stars) >= 4.0 }
   end
 
   def cult_classic?
-    reviews.size > 50 && average_stars >= 4.0
+    #reviews.size > 50 && average_stars >= 4.0
+    reviews.count > 50 && average_stars >= 4.0
   end
   
   def flop?
@@ -62,6 +85,8 @@ class Movie < ActiveRecord::Base
   end
 
   def recent_reviews
-    reviews.order(created_at: :desc).limit(2)
+    #reviews.order(created_at: :desc).limit(2)
+    # has_many :reviews has a 2nd parameter with sorting criteria
+    reviews.limit(2)
   end
 end
