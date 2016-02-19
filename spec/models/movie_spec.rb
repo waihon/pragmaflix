@@ -353,9 +353,9 @@ describe "A movie" do
       @movie2 = Movie.create!(movie_attributes(released_on: 2.months.ago))
       @movie3 = Movie.create!(movie_attributes(released_on: 1.month.ago))
       @movie4 = Movie.create!(movie_attributes(released_on: 1.week.ago))
-      @movie5 = Movie.create!(movie_attributes(released_on: 1.day.ago))
+      @movie5 = Movie.create!(movie_attributes(released_on: 2.days.ago))
       @movie6 = Movie.create!(movie_attributes(released_on: 1.hour.ago))
-      @movie7 = Movie.create!(movie_attributes(released_on: 1.day.from_now))
+      @movie7 = Movie.create!(movie_attributes(released_on: 2.days.from_now))
     end
 
     it "returns a specified number of released movies ordered with the most recent movie first" do
