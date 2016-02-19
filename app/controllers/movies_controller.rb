@@ -3,19 +3,19 @@ class MoviesController < ApplicationController
   before_action :require_admin, except: [:index, :show]
 
   def index
-    #@movies = Movie.released
-    case params[:scope]
-    when "hits"
-      @movies = Movie.hits
-    when "flops"
-      @movies = Movie.flops
-    when "upcoming"
-      @movies = Movie.upcoming
-    when "recent"
-      @movies = Movie.recent(3)
-    else
-      @movies = Movie.released
-    end
+    # case params[:scope]
+    # when "hits"
+    #   @movies = Movie.hits
+    # when "flops"
+    #   @movies = Movie.flops
+    # when "upcoming"
+    #   @movies = Movie.upcoming
+    # when "recent"
+    #   @movies = Movie.recent(3)
+    # else
+    #   @movies = Movie.released
+    # end
+    @movies = Movie.send(movies_scope)
     @genres = Genre.all
   end
 
@@ -73,5 +73,13 @@ private
   # with an empty array. 
     params.require(:movie).permit(:title, :description, :rating, :released_on, 
       :total_gross, :cast, :director, :duration, :image, genre_ids: [])
+  end
+
+  def movies_scope
+    if params[:scope].in? %w(hits flops upcoming recent)
+      params[:scope]
+    else
+      :released
+    end
   end
 end

@@ -11,14 +11,31 @@ Rails.application.routes.draw do
 
   root "movies#index"
 
+  # Option 1
   # get "movies/filter/hits" => "movies#index", scope: "hits"
   # get "movies/filter/flops" => "movies#index", scope: "flops"
-  get "movies/filter/:scope" => "movies#index", as: :filtered_movies
+  # get "movies/filter/upcoming" => "movies#index", scope: "upcoming"
+  # get "movies/filter/recent" => "movies#index", scope: "recent"
 
+
+  # Option 2
+  # get "movies/filter/:scope" => "movies#index", as: :filtered_movies
+  # %w(hits flops upcoming recent).each do |scope|
+  #   get "movies/#{scope}" => redirect("/movies/filter/#{scope}")
+  # end
+
+  # Option 3
+  get "movies/:scope" => "movies#index", 
+    constraints: { scope: /hits|flops|upcoming|recent/ }, 
+    as: :filtered_movies
+
+  # Option 1
   # get "movies"          => "movies#index"
   # get "movies/:id"      => "movies#show", as: "movie"
   # get "movies/:id/edit" => "movies#edit", as: "edit_movie"
   # patch "movies/:id"    => "movies#update"
+
+  # Option 2
   resources :movies do
     resources :reviews
     resources :favorites

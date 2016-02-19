@@ -10,4 +10,11 @@ module ApplicationHelper
   def title(title)
     content_for :title, title
   end
+
+  def nav_link_to(text, url)
+    #link_to 'Upcoming', filtered_movies_path(:upcoming), class: 'button'
+    classes = ["button"]
+    classes << "active" if current_page?(url)
+    link_to text, url, class: classes.join(" ")
+  end
 end

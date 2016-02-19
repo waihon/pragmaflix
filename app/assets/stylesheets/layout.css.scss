@@ -158,6 +158,10 @@ aside#sidebar {
           color: #000;
         }
 
+        a.active {
+          background-color: $subdued-color;
+          color: #000;
+        }
       }
     }
   }
