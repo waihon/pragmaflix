@@ -167,9 +167,9 @@ describe "A user" do
   it "has many reviews" do
     # Arrange
     user = User.create!(user_attributes)
-    movie1 = Movie.create!(movie_attributes)
-    movie2 = Movie.create!(movie_attributes)
-    movie3 = Movie.create!(movie_attributes)
+    movie1 = Movie.create!(movie_attributes(title: "Movie 1"))
+    movie2 = Movie.create!(movie_attributes(title: "Movie 2"))
+    movie3 = Movie.create!(movie_attributes(title: "Movie 3"))
     review1 = Review.create!(review_attributes(user_id: user.id, movie_id: movie1.id))
     review2 = Review.create!(review_attributes(user_id: user.id, movie_id: movie2.id))
     review3 = Review.create!(review_attributes(user_id: user.id, movie_id: movie3.id))

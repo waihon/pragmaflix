@@ -17,7 +17,8 @@ describe MoviesController do
     end
 
     it "can access show" do
-      get :show, id: @movie.id
+      #get :show, id: @movie.id
+      get :show, id: @movie
 
       #expect(response).to have_http_status(200)
       expect(response.status).to eq(200)

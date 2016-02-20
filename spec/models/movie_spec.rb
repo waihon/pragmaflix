@@ -18,13 +18,13 @@ describe "A movie" do
   it "is a flop if it is not a cult classic and the total gross is less than $50M" do
     # Arrange
     # Movie with 50 reviews or less even with average stars of 4 or or better
-    movie1 = Movie.create(movie_attributes(total_gross: 49_999_999.99))
+    movie1 = Movie.create(movie_attributes(title: "Iron Man", total_gross: 49_999_999.99))
     50.times do
       movie1.reviews.create(review_attributes(stars: 4))
     end
     
     # Movie with more than 50 reviews but iwht average stars of worse than 4
-    movie2 = Movie.create(movie_attributes(total_gross: 49_999_999.99))
+    movie2 = Movie.create(movie_attributes(title: "Superman", total_gross: 49_999_999.99))
     51.times do
       movie2.reviews.create(review_attributes(stars: 3.99))
     end
@@ -38,7 +38,7 @@ describe "A movie" do
     # Arrange
     # Movie that has more than 51 reviews and with average stars of 4 or better
     # but with total gross of less than $50M
-    movie1 = Movie.create(movie_attributes(total_gross: 49_999_999.99))
+    movie1 = Movie.create(movie_attributes(title: "Iron Man", total_gross: 49_999_999.99))
     # The reviewer name has been refactored as user_id in reviews table
     #review = movie1.reviews.create(review_attributes(stars: 4, name: "Mary Jane"))
     user = User.create!(user_attributes(name: "Mary Jane"))
@@ -50,7 +50,7 @@ describe "A movie" do
 
     # Movie that has more than 51 reviews and with average stars of 4 or better
     # and with total gross of $50M or more
-    movie2 = Movie.create(movie_attributes(total_gross: 50_000_000.00))
+    movie2 = Movie.create(movie_attributes(title: "Superman", total_gross: 50_000_000.00))
     51.times do
       movie2.reviews.create(review_attributes(stars: 4))
     end
@@ -105,9 +105,9 @@ describe "A movie" do
   # Code examples from the course instructor
   it "returns released movies ordered with the most recently-released movie first" do
     # Arrange
-    movie1 = Movie.create(movie_attributes(released_on: 3.months.ago))
-    movie2 = Movie.create(movie_attributes(released_on: 2.months.ago))
-    movie3 = Movie.create(movie_attributes(released_on: 1.month.ago))
+    movie1 = Movie.create(movie_attributes(title: "Movie 1", released_on: 3.months.ago))
+    movie2 = Movie.create(movie_attributes(title: "Movie 2", released_on: 2.months.ago))
+    movie3 = Movie.create(movie_attributes(title: "Movie 3", released_on: 1.month.ago))
 
     # Assert
     expect(Movie.released).to eq([movie3, movie2, movie1])
@@ -312,8 +312,8 @@ describe "A movie" do
 
   context "hits query" do
     it "returns movies with a total gross of at least $300M" do
-      movie1 = Movie.create!(movie_attributes(total_gross: 300_000_000.00))
-      movie2 = Movie.create!(movie_attributes(total_gross: 299_999_999.99))
+      movie1 = Movie.create!(movie_attributes(title: "Iron Man", total_gross: 300_000_000.00))
+      movie2 = Movie.create!(movie_attributes(title: "Superman", total_gross: 299_999_999.99))
 
       expect(Movie.hits).to eq([movie1])
     end
@@ -321,8 +321,8 @@ describe "A movie" do
 
   context "flops query" do
     it "return movies with a total gross less than $50M" do
-      movie1 = Movie.create!(movie_attributes(total_gross: 50_000_000.00))
-      movie2 = Movie.create!(movie_attributes(total_gross: 49_999_999.99))
+      movie1 = Movie.create!(movie_attributes(title: "Iron Man", total_gross: 50_000_000.00))
+      movie2 = Movie.create!(movie_attributes(title: "Superman", total_gross: 49_999_999.99))
 
       expect(Movie.flops).to eq([movie2])
     end
@@ -330,8 +330,8 @@ describe "A movie" do
 
   context "upcoming query" do
     it "returns the movies with a released on date in the future" do
-      movie1 = Movie.create!(movie_attributes(released_on: 3.months.ago))
-      movie2 = Movie.create!(movie_attributes(released_on: 3.months.from_now))
+      movie1 = Movie.create!(movie_attributes(title: "Iron Man", released_on: 3.months.ago))
+      movie2 = Movie.create!(movie_attributes(title: "Superman", released_on: 3.months.from_now))
 
       expect(Movie.upcoming).to eq([movie2])
     end
@@ -339,9 +339,9 @@ describe "A movie" do
 
   context "rated query" do
     it "returns released movies with the specified rating" do
-      movie1 = Movie.create!(movie_attributes(released_on: 3.months.ago, rating: "PG"))
-      movie2 = Movie.create!(movie_attributes(released_on: 3.months.ago, rating: "PG-13"))
-      movie3 = Movie.create!(movie_attributes(released_on: 1.months.from_now, rating: "PG"))
+      movie1 = Movie.create!(movie_attributes(title: "Iron Man", released_on: 3.months.ago, rating: "PG"))
+      movie2 = Movie.create!(movie_attributes(title: "Superman", released_on: 3.months.ago, rating: "PG-13"))
+      movie3 = Movie.create!(movie_attributes(title: "Batman", released_on: 1.months.from_now, rating: "PG"))
 
       expect(Movie.rated("PG")).to eq([movie1])
     end
@@ -349,13 +349,13 @@ describe "A movie" do
 
   context "recent query" do
     before do
-      @movie1 = Movie.create!(movie_attributes(released_on: 3.months.ago))
-      @movie2 = Movie.create!(movie_attributes(released_on: 2.months.ago))
-      @movie3 = Movie.create!(movie_attributes(released_on: 1.month.ago))
-      @movie4 = Movie.create!(movie_attributes(released_on: 1.week.ago))
-      @movie5 = Movie.create!(movie_attributes(released_on: 2.days.ago))
-      @movie6 = Movie.create!(movie_attributes(released_on: 1.hour.ago))
-      @movie7 = Movie.create!(movie_attributes(released_on: 2.days.from_now))
+      @movie1 = Movie.create!(movie_attributes(title: "Iron Man", released_on: 3.months.ago))
+      @movie2 = Movie.create!(movie_attributes(title: "Superman", released_on: 2.months.ago))
+      @movie3 = Movie.create!(movie_attributes(title: "Batman", released_on: 1.month.ago))
+      @movie4 = Movie.create!(movie_attributes(title: "X-Men", released_on: 1.week.ago))
+      @movie5 = Movie.create!(movie_attributes(title: "Spider-Man", released_on: 2.days.ago))
+      @movie6 = Movie.create!(movie_attributes(title: "Catwoman", released_on: 1.hour.ago))
+      @movie7 = Movie.create!(movie_attributes(title: "Next Mov", released_on: 2.days.from_now))
     end
 
     it "returns a specified number of released movies ordered with the most recent movie first" do
@@ -365,5 +365,41 @@ describe "A movie" do
     it "returns a default of 5 released movies ordered with the most recent movie first" do
       expect(Movie.recent).to eq([@movie6, @movie5, @movie4, @movie3, @movie2])
     end
+  end
+
+  it "generates a slug when it's created" do
+    # Arrange
+    movie = Movie.create!(movie_attributes(title: "X-Men: The Last Stand"))
+
+    # Action - N/A
+
+    # Assert
+    expect(movie.slug).to eq("x-men-the-last-stand")
+  end
+
+  it "requires a unique title" do
+    # Arrange
+    movie1 = Movie.create!(movie_attributes(title: "X-Men: The Last Stand"))
+    movie2 = Movie.new(title: movie1.title)
+
+    # Action
+    movie2.valid? # populate errors
+
+    # Assert
+    expect(movie2.errors[:title].any?).to eq(true)
+    expect(movie2.errors[:title].first).to eq("has already been taken")
+  end
+
+  it "requires a unique slug" do
+    # Arrange
+    movie1 = Movie.create!(movie_attributes(title: "X-Men: The Last Stand"))
+    movie2 = Movie.new(slug: movie1.slug)
+
+    # Action
+    movie2.valid? # populate errors
+
+    # Assert
+    expect(movie2.errors[:slug].any?).to eq(true)
+    expect(movie2.errors[:slug].first).to eq("has already been taken")
   end
 end

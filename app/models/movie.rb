@@ -1,4 +1,6 @@
 class Movie < ActiveRecord::Base
+  before_validation :generate_slug
+  
   has_many :reviews, -> { order(created_at: :desc)}, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :fans, through: :favorites, source: :user
@@ -14,6 +16,7 @@ class Movie < ActiveRecord::Base
   validates :title, :released_on, :duration, presence: true
   validates :description, length: { minimum: 25 }
   validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
+  validates :title, :slug, uniqueness: true
   
   # validates :image_file_name, allow_blank: true, format: {
   #   with: /\w+\.(gif|jpg|png)\z/i,
@@ -88,5 +91,13 @@ class Movie < ActiveRecord::Base
     #reviews.order(created_at: :desc).limit(2)
     # has_many :reviews has a 2nd parameter with sorting criteria
     reviews.limit(2)
+  end
+
+  def to_param
+    slug
+  end
+
+  def generate_slug
+    self.slug ||= title.parameterize if title?
   end
 end
