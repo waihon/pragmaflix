@@ -51,7 +51,7 @@ class GenresController < ApplicationController
   private
 
     def genre_params
-      params.require(:genre).permit(:name)
+      params.require(:genre).permit(:name, :slug)
     end
 
     def set_genre
