@@ -73,7 +73,7 @@ private
   # Please note that genre_ids is not a symbol and it has to be initialized
   # with an empty array. 
     params.require(:movie).permit(:title, :description, :rating, :released_on, 
-      :total_gross, :cast, :director, :duration, :image, genre_ids: [])
+      :total_gross, :cast, :director, :duration, :image, :slug, genre_ids: [])
   end
 
   def movies_scope

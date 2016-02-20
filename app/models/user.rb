@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  before_save :format_username
+  before_save :format_email
+
   has_many :reviews, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favorite_movies, through: :favorites, source: :movie
@@ -41,4 +44,18 @@ class User < ActiveRecord::Base
            User.where("lower(username) = ?", email_or_username.downcase).first
     user && user.authenticate(password)
   end
+
+  def to_param
+    username
+  end
+
+  private
+
+    def format_username
+      self.username = username.downcase
+    end
+
+    def format_email
+      self.email = email.downcase
+    end
 end

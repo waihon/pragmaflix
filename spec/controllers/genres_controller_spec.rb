@@ -16,7 +16,7 @@ describe GenresController do
     end
 
     it "can access show" do
-      get :show, id: @genre.id
+      get :show, id: @genre
 
       expect(response.status).to eq(200)
     end

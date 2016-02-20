@@ -42,6 +42,12 @@
       <li>
         <%= f.collection_check_boxes :genre_ids, Genre.all, :id, :name %>
       </li>      
+      <% unless @movie.new_record? %>
+        <li>
+          <%= f.label :slug %>
+          <%= f.text_field :slug, size: 30 %>
+        </li>
+      <% end %>
       <li>
         <%= f.label :image %>
         <%= f.file_field :image %>

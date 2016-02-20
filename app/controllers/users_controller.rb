@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   before_action :require_signin, except: [:new, :create]
   #before_action :require_correct_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]  
   before_action :require_correct_user, only: [:edit, :update]
   before_action :require_admin, only: [:destroy]
+
   
   def index
     #@users = User.all
@@ -10,7 +12,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    # Moved to set_user
+    #@user = User.find(params[:id])
     @reviews = @user.reviews
     @favorite_movies = @user.favorite_movies
   end
@@ -31,12 +34,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # Moved to require_current_user
+    # Moved to set_user
     #@user = User.find(params[:id])
   end
 
   def update
-    # Moved to require_current_user
+    # Moved to set_user
     #@user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to user_path(@user), notice: "Account successfully updated!"
@@ -46,7 +49,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    # Moved to set_user
+    #@user = User.find(params[:id])
     @user.destroy
     # Don't automatically sign out admin after deleting a user.
     #session[:user_id] = nil
@@ -59,8 +63,13 @@ private
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :username)    
   end  
 
+  def set_user
+    #@user = User.find(params[:id])
+    @user = User.find_by(username: params[:id])
+  end
+
   def require_correct_user
-    @user = User.find(params[:id])
     redirect_to root_url unless current_user?(@user)
   end
+
 end
