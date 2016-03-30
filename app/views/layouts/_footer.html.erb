@@ -1,12 +1,18 @@
 <footer id="page-footer">
   <p>
-    Copyright &copy; <%= Date.today.year.to_s %>
-    <%= link_to "The Pragmatic Studio's Ruby on Rails: Level I", 'http://pragmaticstudio.com/alumni/waihon' %>
+    Copyright &copy; 
+    <% if Time.now.year > 2016 %>
+      2016-<%= Time.now.year %>. 
+    <% else %>
+      2016.
+    <% end %>
+    Developed by <%= link_to "Waihon Yew", "http://fb.me/waihonpage" %> based on online Ruby on Rails courses taught by<br/>
+    <%= link_to "The Pragmatic Studio's Ruby on Rails: Level I & Ruby on Rails: Level II", 'http://pragmaticstudio.com/alumni/waihon' %>
   </p>
   <p>
     For educational purposes only.
   </p>
   <p>
-    <%= link_to "Waihon Yew Shares his SaaS Development Journey", "https://www.facebook.com/waihonpage" %>
+    <%= link_to "Waihon Yew Shares his SaaS development journey", "https://www.facebook.com/waihonpage" %>
   </p>
 </footer>
